@@ -1,0 +1,20 @@
+{
+  "Discord" :
+    {
+      "token" : "YOUR-BOT-USER-TOKEN",
+      "server" : {
+        "YOUR-SERVER-NAME" : {
+          "joinChannel" : "CHANNEL-NAME",
+          "joinMessage" : "Welcome to YOUR-SERVER-NAME <@{0}>!",
+          "removeMessage" : "**{0}** has left the server!",
+          "removeChannel" : "CHANNEL-NAME"
+        },
+        "ANOTHER-SERVER-NAME" : {
+          "joinChannel" : "CHANNEL-NAME",
+          "joinMessage" : "Welcome to YOUR-SERVER-NAME <@{0}>!",
+          "removeMessage" : "**{0}** has left the server!",
+          "removeChannel" : "CHANNEL-NAME"
+        }
+      }
+    }
+}
