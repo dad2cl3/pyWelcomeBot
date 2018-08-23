@@ -16,5 +16,14 @@
           "removeChannel" : "CHANNEL-NAME"
         }
       }
+    },
+  "tasks": {
+    "online_report": {
+      "refresh_url": "SOME-URL",
+      "refresh_interval": SOME-INTERVAL,
+      "report_url": "SOME-URL",
+      "report_title": "REPORT-TITLE",
+      "report_description": "REPORT-DESCRIPTION"
     }
+  }
 }
