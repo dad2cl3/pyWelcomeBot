@@ -35,15 +35,23 @@ Added an **on_message** event to listen for the command *!online*. The command c
 The background task executes at a prescribed time once a day to pull a list of accounts on the Discord server. The accounts are passed through an API endpoint to a serverless AWS Lambda function which parses and stores the accounts within an Amazon RDS PostgreSQL database instance. The stored accounts are processed within the database to try and create a cross reference of Destiny 2 accounts and Discord accounts.
 
 # Supported Commands
-## !online - TODO: Add details
+## !online
 The *!online* command retrieves the most recent list of clan members currently playing Destiny 2, formats the list, and sends a direct message to the user who executed the command.
 
-![The command response appears as follows within Discord:](https://github.com/dad2cl3/pyWelcomeBot/blob/master/doc/online-report.png)
+The command relies upon two background tasks within the bot. The [first](https://github.com/dad2cl3/pyWelcomeBot/blob/master/aws/lambda/get_online_report.py) calls an API endpoint which refreshes the list of clan members online and stores the list in a Redis cache. The refresh task runs on a interval that is specified within the bot configuration file. The [second](https://github.com/dad2cl3/pyWelcomeBot/blob/master/aws/lambda/refresh_online_report.py) simply retrieves the list from the Redis cache, formats it, and sends it to the requestor as a direct message.
 
-## !link report - TODO: Add details
+The command response appears as follows within Discord:
+
+![Online Report](https://github.com/dad2cl3/pyWelcomeBot/blob/master/doc/online-report.png)
+
+## !link report
 The *!link report* command retrieves a list of Discord and Destiny 2 accounts which can not be found within a maintained account cross reference table.
 
-![The command response appears as follows within Discord:](https://github.com/dad2cl3/pyWelcomeBot/blob/master/doc/link-report.png)
+The command relies upon a cross reference table that contains the relationship between Discord user accounts and Destiny gaming accounts. Two views built on the cross reference table provide the data for the report. The [first](https://github.com/dad2cl3/destiny-clan-member-manager/blob/master/sql/discord/create_view-vw_discord_accounts.sql) identifies Discord accounts which have no corresponding entry in the account cross reference. The [second](https://github.com/dad2cl3/destiny-clan-member-manager/blob/master/sql/discord/create_view-vw_destiny_accounts.sql) identifies Destiny accounts which do not have a corresponding entry in the account cross reference. The two lists are formatted as inline fields within a Discord Embed and returned to the requestor as a direct message.
+
+The command response appears as follows within Discord:
+
+![Link Report](https://github.com/dad2cl3/pyWelcomeBot/blob/master/doc/link-report.png)
 
 ## !link gamertag:gamertag discord:discord - TODO: Add details
 The *!link gamertag:gamertag discord:discord* command allows a user (or admin) manually link Discord and Destiny 2 accounts that can not be linked automatically.
